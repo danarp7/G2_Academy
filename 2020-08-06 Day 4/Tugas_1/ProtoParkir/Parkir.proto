@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option go_package = "/ProtoParkir";
+
+package parkir;
+
+import "google/protobuf/empty.proto";
+
+service Connect {
+  rpc ConnectToServer (google.protobuf.Empty) returns (ServerReply) {}
+  rpc KarcisMasuk (google.protobuf.Empty) returns (Karcis) {}
+  rpc StrukPembayaran (Parkir) returns (Struk) {}
+}
+
+message ServerReply {
+  string message = 1;
+}
+
+message Karcis {
+  string id_parkir = 1;
+  string waktu_masuk = 2;
+}
+
+message Parkir {
+  string id_parkir = 1;
+  string tipe_kendaraan = 2;
+  string plat_no = 3;
+}
+
+message Struk {
+  string id_parkir = 1;
+  string waktu_masuk = 2;
+  string waktu_keluar = 3;
+  int32 durasi = 4;
+  string tipe_kendaraan = 5;
+  string plat_no = 6;
+  int32 biaya_parkir = 7;
+}
