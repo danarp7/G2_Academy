@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+option go_package = "/proto";
+
+package SiswaService;
+
+import "google/protobuf/empty.proto";
+
+service Connect {
+  rpc ConnectToServer (google.protobuf.Empty) returns (ServerReply) {}
+  rpc Soal (PilihanSoal) returns (SoalList) {}
+  rpc Hasil (KumpulanJawaban) returns (Result) {}
+  rpc AmbilTema(PilihTema) returns (TemaList) {}
+  rpc AmbilMapel(PilihMapel) returns (MapelList) {}
+  rpc AmbilKelas(PilihKelas) returns (KelasList) {}
+}
+
+
+//ini adalah kumpulan func (seperti interface)
+service Guru {
+  rpc KirimSoalKeServer (PaketSoal) returns (ServerGuruReply) {}
+}
+
+service Data {
+  rpc CheckLogin (InputLogin) returns (UserData) {}
+  rpc NewSignUp (User) returns (UserData) {}
+}
+
+message KelasList {
+  repeated string KelasList = 1;
+}
+
+message PilihKelas {
+    string Tingkat = 1;
+}
+
+
+message MapelList {
+  repeated string MapelList = 1;
+}
+
+message PilihMapel {
+    string Tingkat = 1;
+    string Kelas = 2;
+}
+
+message TemaList {
+  repeated string TemaList = 1;
+}
+
+message PilihTema {
+    string Tingkat = 1;
+    string Kelas = 2;
+    string Matpel = 3;
+}
+
+//ini seperti objek
+message ServerGuruReply {
+  string message = 1;
+}
+
+message PaketSoal {
+    string Tingkat = 1;
+    string Kelas = 2;
+    string Matpel = 3;
+    string Tema = 4;
+    repeated Soal Soal = 5;
+  }
+
+message ServerReply {
+  string message = 1;
+}
+
+message PilihanSoal {
+  string Tingkat = 1;
+  string Kelas = 2;
+  string Mapel = 3;
+  string TemaSoal = 4;
+}
+
+//message TemaSoal {
+//  map<string, SoalSoal> TemaSoal = 1;
+//}
+
+message SoalList {
+  repeated Soal SoalList = 1;
+}
+
+message Soal {
+  string Pertanyaan = 1;
+  string Jawaban = 2;
+  repeated string Pilihan = 3;
+}
+
+message KumpulanJawaban {
+  string Tingkat = 1;
+  string Kelas = 2;
+  string Mapel = 3;
+  string TemaSoal = 4;
+  repeated string JawabanList = 5;
+}
+
+message Result {
+  string Result = 1;
+}
+
+message InputLogin {
+  string Username = 1;
+  string Password = 2;
+}
+
+message UserData {
+  string Notice = 1;
+  User User = 2;
+}
+
+message User {
+  string Username = 1;
+  string Password = 2;
+  string Nama = 3;
+  int32 Umur = 4;
+  string Status = 5;
+}
